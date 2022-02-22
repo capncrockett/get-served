@@ -14,12 +14,15 @@
     <div id="root">
         <button onclick="handleGet(event);">GET</button>
         <button onclick="handlePost(event);">POST</button>
-
-        <p id="content" style="font-size: 4rem;"></p>
+        <button onclick="handleCount(event)">Count</button>
+        <p id="content"></p>
+        <p>Clicks:
+            <button id="clicks">0</button>
+        </p>
+        <p id="counting-message"></p>
     </div>
     <script>
         async function handleGet(event) {
-            // const response = await fetch('http://127.0.0.1:8000/hello')
             const response = await fetch('http://127.0.0.1:5000/hello')
             const json = await response.json()
             console.log(json.message)
@@ -28,14 +31,27 @@
         }
 
         async function handlePost(event) {
-            // const response = await fetch('http://127.0.0.1:8000/posted')
             const response = await fetch('http://127.0.0.1:5000/posted')
             const json = await response.json()
-            // console.log(event)
             console.log(json.message)
             const content = document.getElementById('content')
             content.innerHTML = json.message
         }
+
+        var clicked = 0
+        async function handleCount(event) {
+            const response = await fetch('http://127.0.0.1:5000/counted')
+            const json = await response.json()
+            console.log(json.count)
+            const content = document.getElementById('counting-message')
+            content.innerHTML = json.count
+
+            clicked += 1
+            console.log(clicked)
+            const counter = document.getElementById('clicks')
+            counter.innerHTML = clicked
+        }
+
     </script>
 </body>
 

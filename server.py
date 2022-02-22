@@ -14,7 +14,11 @@ async def hello(request):
 async def posted(request):   # is this a request if it's a POST?
     announcement = 'posted'
     return JSONResponse({'message': f'Yo shit got {announcement}!'})
-    # return JSONResponse({'message': 'Posted'})
+
+
+async def counted(request):
+    count_it = "you're counting!"
+    return JSONResponse({'count': count_it})
 
 
 # Allow all incoming request origins.
@@ -25,7 +29,8 @@ middleware = [
 # Starlette works as a router and then demands a cors authentication.
 app = Starlette(debug=True, routes=[
     Route('/hello', hello),
-    Route('/posted', posted)
+    Route('/posted', posted),
+    Route('/counted', counted)
 ], middleware=middleware)
 
 if __name__ == "__main__":
